@@ -1,8 +1,4 @@
 package model;
 
-import lombok.Getter;
-
-@Getter
-public class Player {
-    String name;
+public record Player(Long id, String name) {
 }

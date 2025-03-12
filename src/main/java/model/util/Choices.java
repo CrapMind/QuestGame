@@ -8,9 +8,9 @@ import lombok.Getter;
 @AllArgsConstructor
 public class Choices {
 
-    String rightChoice;
-    String wrongChoice;
-    String anotherWrongChoice;
+    private String rightChoice;
+    private String wrongChoice;
+    private String anotherWrongChoice;
 
     public Choices(String rightChoice, String wrongChoice) {
         this.rightChoice = rightChoice;
