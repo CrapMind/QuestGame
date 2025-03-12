@@ -29,19 +29,20 @@
     let globalScene = 1;
 
 
-    document.addEventListener("DOMContentLoaded", function () {
+    $(document).ready(function () {
         typeText("Welcome to the QUEST GAME!", "CHOICE");
     });
 
     function typeText(text, condition) {
-        $('#choicesContainer').hide();
-        $('#buttonsContainer').hide();
+        let $displayText = $('#displayText');
+
+        $('#choicesContainer, #buttonsContainer').hide();
         let index = 0;
-        textContainer.innerHTML = "";
+        $displayText.html("");
 
         function type() {
             if (index < text.length) {
-                textContainer.innerHTML += text.charAt(index);
+                $displayText.append(text.charAt(index));
                 index++;
                 setTimeout(type, 30);
             } else {
@@ -54,29 +55,28 @@
     }
 
     function displayButtons(condition) {
-
+        let $choicesContainer = $('#choicesContainer');
+        let $buttonContainer = $('#buttonsContainer');
         switch (condition) {
-            case 'CONTINUE': {
+            case 'CONTINUE':
                 loadScene(globalScene);
                 break;
-            }
-            case 'QUIT': {
-                $('#choicesContainer').show().find('.proceedButton').hide();
+            case 'QUIT':
+                $choicesContainer.show().find('.proceedButton').hide();
                 $('#quitButton').show();
-                break;}
-            case 'CHOICE': {
-                $('#choicesContainer').show();
-                break;}
-            case 'BUTTONS': {
-                $('#buttonsContainer').show();
-                let $button3 = $('#choiceButton3');
-                $button3.text() === "[]" ? $button3.hide() : $button3.show();
                 break;
-            }
-            case 'NONE': {
-                $('#buttonsContainer', '#choicesContainer').hide();
+            case 'CHOICE':
+                $choicesContainer.show();
                 break;
-            }
+            case 'BUTTONS':
+                let $choicesButton3 = $('#choiceButton3');
+                $buttonContainer.show();
+                $choicesButton3.toggle($choicesButton3.text() !== "[]");
+                break;
+            case 'NONE':
+                $buttonContainer.hide();
+                $choicesContainer.hide();
+                break;
         }
     }
 
@@ -85,32 +85,24 @@
             typeText("Okay, LET'S GO!", "CONTINUE");
         } else {
             typeText("Goodbye :(", "NONE");
-            setTimeout(() => {
-                window.close();
-            }, 1000);
-
+            setTimeout(() => window.close(), 1000);
         }
     }
 
     function loadScene(scene) {
         console.log(scene);
-        $.ajax({
-            type: 'GET',
-            url: BASE_URL + "/rest/scene?scene=" + scene,
-            contentType: 'application/json',
-        }).done(response => {
+        $.get(BASE_URL + "/rest/scene?scene=" + scene, function (response) {
             typeText(response.text, "BUTTONS");
 
-            let choices = response.choices;
-            for (let i = 0; i < choices.length; i++) {
+            response.choices.forEach((choice, i) => {
                 $('#choiceButton' + (i + 1))
-                    .text("[" + choices[i] + "]")
+                    .text("[" + choice + "]")
                     .off()
-                    .click(() => makeMove(scene, choices[i]));
-            }
+                    .click(() => makeMove(scene, choice));
+            });
         }).fail(error => {
             typeText(error.status, error.responseText);
-        })
+        });
     }
 
     function makeMove(scene, choice) {
@@ -118,17 +110,14 @@
             typeText("CONGRATULATIONS! You won!", "QUIT");
             return;
         }
-        $.ajax({
-            type: 'GET',
-            url: BASE_URL + "/rest/move?scene=" + scene + "&choice=" + choice,
-            contentType: 'application/json',
-        }).done(response => {
+        $.get(BASE_URL + "/rest/move?scene=" + scene + "&choice=" + choice, function (response) {
             globalScene++;
             typeText(response.scene, response.choice === "right" ? "CONTINUE" : "QUIT");
         }).fail(error => {
             typeText(error.status, error.responseText);
         });
     }
+
 </script>
 
 </body>
