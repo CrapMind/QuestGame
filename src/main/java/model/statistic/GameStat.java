@@ -1,4 +1,4 @@
-package model.statictic;
+package model.statistic;
 
 import lombok.Getter;
 import model.Player;
