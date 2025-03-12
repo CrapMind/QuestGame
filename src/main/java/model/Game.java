@@ -1,16 +1,28 @@
 package model;
 
 import lombok.Getter;
-import model.statictic.GameStat;
+import service.MovingService;
+import service.impl.MovingServiceImpl;
+
 @Getter
 public class Game {
 
-    private static final Game GAME = new Game(new GameStat());
-    private final GameStat GAME_STAT = new GameStat();
-    private Game(GameStat statistic) {
+    private static Game game;
+    private MovingService movingService;
+
+    private Game() {
+    }
+
+    public static Game init() {
+        game = new Game();
+        game.movingService = new MovingServiceImpl();
+        return game;
     }
 
     public static Game getInstance() {
-        return GAME;
+        if (game == null) {
+            init();
+        }
+        return game;
     }
 }

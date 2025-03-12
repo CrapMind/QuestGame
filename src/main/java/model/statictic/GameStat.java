@@ -8,12 +8,12 @@ import java.util.stream.Collectors;
 
 @Getter
 public class GameStat {
-    Player player;
-    Map<String, Boolean> moves;
+    private Player player;
+    private Map<String, Boolean> moves;
 
     @Override
     public String toString() {
-        return "Player: " + player.getName() + "\n Moves: " + moves.entrySet().stream()
+        return "Player: " + player.name() + "\n Moves: " + moves.entrySet().stream()
                 .filter(Map.Entry::getValue)
                 .map(Map.Entry::getKey)
                 .collect(Collectors.joining(" | "));

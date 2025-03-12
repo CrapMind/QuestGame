@@ -3,7 +3,9 @@ package repository;
 import model.util.Choices;
 import java.util.Map;
 
-public class MovesRepository {
+public class MovingRepository {
+
+    private boolean isWrongChoice;
 
     private final Map<Integer, String> FIRST_SCENE = Map.of(1, "You come to, your head is buzzing, there is a dense jungle around you. There is a bag in front of you.");
     private final Map<Integer, String> SECOND_SCENE = Map.of(2, "In the bag you find: a knife, a flask of water and a piece of rope. What do you take?");
@@ -28,15 +30,15 @@ public class MovesRepository {
             NINE_SCENE, new Choices("Wave your clothes to attract attention", "Run straight to the boat"),
             TEN_SCENE, new Choices("Say that you have lost your memory and ask for help", "Try to take the boat by force"));
 
-    private static MovesRepository movesRepository = new MovesRepository();
+    private static MovingRepository movingRepository = new MovingRepository();
 
-    private MovesRepository() {}
+    private MovingRepository() {}
 
-    public static MovesRepository getInstance() {
-        if (movesRepository == null) {
-            movesRepository = new MovesRepository();
+    public static MovingRepository getInstance() {
+        if (movingRepository == null) {
+            movingRepository = new MovingRepository();
         }
-        return movesRepository;
+        return movingRepository;
     }
 
     public String move(int scene, String choice) {
@@ -48,8 +50,10 @@ public class MovesRepository {
         }
 
         if (choice.equals(currentChoice.getRightChoice())) {
+            isWrongChoice = false;
             return "✅ Correct choice! Moving to the next scene.";
         } else {
+            isWrongChoice = true;
             return getDefeatMessage(scene, choice, currentChoice);
         }
     }
@@ -98,5 +102,38 @@ public class MovesRepository {
             default -> "Unknown failure.";
         };
     }
+    public String getSceneText(int scene) {
+        return switch (scene) {
+            case 1 -> FIRST_SCENE.get(1);
+            case 2 -> SECOND_SCENE.get(2);
+            case 3 -> THIRD_SCENE.get(3);
+            case 4 -> FOURTH_SCENE.get(4);
+            case 5 -> FIVE_SCENE.get(5);
+            case 6 -> SIX_SCENE.get(6);
+            case 7 -> SEVEN_SCENE.get(7);
+            case 8 -> EIGHT_SCENE.get(8);
+            case 9 -> NINE_SCENE.get(9);
+            case 10 -> TEN_SCENE.get(10);
+            default -> throw new IllegalStateException("Unexpected value: " + scene);
+        };
+    }
 
+    public String getButtonText(int scene, int button) {
+        String result = "";
+        switch (button) {
+            case 1 -> result = MOVES.get(getScene(scene)).getRightChoice();
+            case 2 -> result = MOVES.get(getScene(scene)).getWrongChoice();
+            case 3 -> {
+                if (MOVES.get(getScene(scene)).getAnotherWrongChoice() != null) {
+                    result = MOVES.get(getScene(scene)).getAnotherWrongChoice();
+                }
+            }
+            default -> throw new IllegalStateException("Unexpected value: " + button);
+        }
+        return result;
+    }
+
+    public String isWrongChoice() {
+        return isWrongChoice ? "wrong" : "right";
+    }
 }

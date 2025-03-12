@@ -1,0 +1,55 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+#gameScreen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-image: url("/images/gameScreen.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#displayText {
+
+    position: absolute;
+    top: 15vh;
+    left: 25vw;
+    width: 50vw;
+    height: 30vh;
+    font-size: 40px;
+    font-family: 'Press Start 2P', monospace;
+    color: #00ff00;
+    text-shadow: 0 0 5px #00ff00, 0 0 10px #008000;
+    text-align: center;
+    overflow: hidden;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+#choicesContainer, #buttonsContainer {
+    position: absolute;
+    bottom: 250px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    display: none;
+}
+
+.proceedButton, .choiceButton {
+    font-family: 'Press Start 2P', monospace;
+    color: #00ff00;
+    text-shadow: 0 0 5px #00ff00, 0 0 10px #008000;
+    cursor: pointer;
+    font-size: 20px;
+    margin: 20px;
+    display: inline-block;
+    transition: 0.2s;
+}
+
+.proceedButton:hover .choiceButton:hover {
+    color: #33ff33;
+    text-shadow: 0 0 8px #33ff33, 0 0 15px #00ff00;
+}
