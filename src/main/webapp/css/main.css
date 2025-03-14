@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
-
+/* Styles for the main game screen */
 #gameScreen {
     position: absolute;
     top: 0;
@@ -11,7 +11,7 @@
     background-position: center;
     background-repeat: no-repeat;
 }
-
+/* Styles for the text display area */
 #displayText {
 
     position: absolute;
@@ -28,7 +28,7 @@
     padding: 10px;
     border-radius: 10px;
 }
-
+/* Containers for choice buttons */
 #choicesContainer, #buttonsContainer {
     position: absolute;
     bottom: 250px;
@@ -37,7 +37,7 @@
     text-align: center;
     display: none;
 }
-
+/* Styles for interactive buttons */
 .proceedButton, .choiceButton {
     font-family: 'Press Start 2P', monospace;
     color: #00ff00;
@@ -48,8 +48,144 @@
     display: inline-block;
     transition: 0.2s;
 }
-
+/* Hover effect for buttons */
 .proceedButton:hover .choiceButton:hover {
     color: #33ff33;
     text-shadow: 0 0 8px #33ff33, 0 0 15px #00ff00;
 }
+/* Intro screen container */
+#introContainer {
+    position: absolute;
+    top: 30vh;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    font-family: 'Press Start 2P', monospace;
+    color: #00ff00;
+    text-shadow: 0 0 5px #00ff00, 0 0 10px #008000;
+}
+/* Welcome text styling */
+#welcomeText {
+    font-size: 40px;
+}
+/* Input container for player name */
+#nameInputContainer {
+    top: 30vh;
+    border: #00ff00;
+}
+/* Input field styling */
+#nameInput {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 18px;
+    background: black;
+    color: #00ff00;
+    text-shadow: 0 0 5px #00ff00;
+    border: 2px solid #00ff00;
+    padding: 10px;
+    width: 200px;
+    text-align: center;
+    outline: none;
+}
+/* Placeholder text styling for input field */
+#nameInput::placeholder {
+    color: #008000;
+    text-shadow: 0 0 5px #00ff00;
+}
+/* Save name button styling */
+#saveName {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 18px;
+    color: #00ff00;
+    background: black;
+    border: 2px solid #00ff00;
+    padding: 10px 15px;
+    cursor: pointer;
+    margin-left: 10px;
+    transition: 0.2s;
+}
+/* Hover effect for the save name button */
+#saveName:hover {
+    color: #33ff33;
+    text-shadow: 0 0 8px #33ff33, 0 0 15px #00ff00;
+    border-color: #33ff33;
+}
+
+/* Tooltip container styling */
+.tooltip {
+    display: inline-block;
+    position: relative;
+    font-size: 18px;
+    cursor: pointer;
+    margin-left: 5px;
+}
+/* Tooltip text styling */
+.tooltipText {
+    visibility: hidden;
+    background-color: black;
+    color: #00ff00;
+    text-shadow: 0 0 5px #00ff00;
+    font-size: 12px;
+    padding: 5px;
+    border-radius: 5px;
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    border: 1px solid #00ff00;
+}
+/* Tooltip hover effect */
+.tooltip:hover .tooltipText {
+    visibility: visible;
+}
+/* Game statistics panel styling */
+#gameStat {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.5vw;
+    background: rgba(0, 0, 0, 0.8);
+    color: #00ff00;
+    text-shadow: 0 0 5px #00ff00;
+    border: 2px solid #00ff00;
+    padding: 10px;
+
+    position: absolute;
+    top: 61vh;
+    right: 9vw;
+
+    width: 8.5vw;
+    height: 10vh;
+
+    border-radius: 10px;
+    text-align: left;
+    display: none;
+
+    transition: transform 0.3s ease-in-out, opacity 0.3s;
+}
+
+/* Responsive scaling for game statistics */
+@media (max-width: 800px) {
+    #gameStat {
+        transform: scale(0.8);
+        right: 5%;
+    }
+}
+
+@media (max-width: 600px) {
+    #gameStat {
+        transform: scale(0.7);
+        right: 3%;
+    }
+}
+
+/* Styling for highlighted stat values */
+.stat-value {
+    color: #33ff33;
+    font-weight: bold;
+    transition: color 0.2s, text-shadow 0.2s;
+}
+/* Hover effect for stat values */
+.stat-value:hover {
+    color: #ffff00;
+    text-shadow: 0 0 10px #ffff00;
+}
+
