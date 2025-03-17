@@ -11,16 +11,16 @@ public class GameInitListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent event) {
         log.info("Initializing game...");
-        Game game = Game.init();
-        event.getServletContext().setAttribute("game", game);
+        Game game = Game.init();  // Initialize the game instance
+        event.getServletContext().setAttribute("game", game);   // Store the game instance in the servlet context for global access
         log.info("Game initialized successfully.");
     }
+
 
     @Override
     public void contextDestroyed(ServletContextEvent event) {
         log.info("Shutting down game...");
-        event.getServletContext().removeAttribute("game");
+        event.getServletContext().removeAttribute("game");  // Remove the game instance from the servlet context
         log.info("Game shut down successfully.");
     }
-
 }
